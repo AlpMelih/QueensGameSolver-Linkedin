@@ -43,23 +43,35 @@ const Board: React.FC = () => {
       }
     }
 
-    // Yan yana hücrelerde kraliçe var mı kontrol et
-    if (row > 0 && board[row - 1][col] === 'Q') {
-      console.log(`Hata: Satır ${row}, Sütun ${col} - Üstteki hücrede bir kraliçe var.`);
-      return false; // Üstteki hücre
+    
+// Çaprazlarda kraliçe var mı kontrol et
+  const checkDiagonal = (dx: number, dy: number) => {
+    let r = row + dx;
+    let c = col + dy;
+    while (r >= 0 && r < 5 && c >= 0 && c < 5) {
+      if (board[r][c] === 'Q') {
+        console.log(`Hata: Satır ${row}, Sütun ${col} - Bir birim çaprazda bir kraliçe var.`);
+        return false;
+      }
+      r += dx;
+      c += dy;
     }
-    if (row < 4 && board[row + 1][col] === 'Q') {
-      console.log(`Hata: Satır ${row}, Sütun ${col} - Alttaki hücrede bir kraliçe var.`);
-      return false; // Alttaki hücre
-    }
-    if (col > 0 && board[row][col - 1] === 'Q') {
-      console.log(`Hata: Satır ${row}, Sütun ${col} - Soldaki hücrede bir kraliçe var.`);
-      return false; // Soldaki hücre
-    }
-    if (col < 4 && board[row][col + 1] === 'Q') {
-      console.log(`Hata: Satır ${row}, Sütun ${col} - Sağdaki hücrede bir kraliçe var.`);
-      return false; // Sağdaki hücre
-    }
+    return true;
+  };
+
+  // Sol üstten sağ alta çapraz
+  if (!checkDiagonal(-1, -1)) return false;
+
+  // Sağ üstten sol alta çapraz
+  if (!checkDiagonal(-1, 1)) return false;
+
+  // Sol alttan sağ üste çapraz
+  if (!checkDiagonal(1, -1)) return false;
+
+  // Sağ alttan sol üste çapraz
+  if (!checkDiagonal(1, 1)) return false;
+
+    
 
     return true;
   };
@@ -67,9 +79,9 @@ const Board: React.FC = () => {
   const placeQueens = (board: string[][], row: number, usedColors: Set<string>): boolean => {
     if (row === 5) {
       console.log("Çözüm bulundu:");
-      console.table(board); // Çözümü konsola yazdır
+      console.table(board); 
       setSolutionFound(true);
-      return true; // Tüm kraliçeler yerleştirildiğinde tamamlanmış olur
+      return true; 
     }
 
     for (let col = 0; col < 5; col++) {
@@ -80,11 +92,11 @@ const Board: React.FC = () => {
           usedColors.add(color);
 
           console.log(`Satır: ${row}, Sütun: ${col}, Renk: ${color}`);
-          console.table(board); // Güncel tahtayı konsola yazdır
+          console.table(board); 
 
           if (placeQueens(board, row + 1, usedColors)) return true;
 
-          // Geri izleme (backtracking) - Hatalı çözüm bulunduğunda renkleri eski yerine koy
+         
           console.log(`Geri izleme: Satır ${row}, Sütun ${col}, Renk ${color}`);
           board[row][col] = color; // Rengi geri yükle
           usedColors.delete(color);
