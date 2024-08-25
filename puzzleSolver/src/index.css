@@ -1,0 +1,37 @@
+.app {
+  text-align: center;
+  padding: 20px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(9, 50px);
+  gap: 2px;
+  margin: 20px auto;
+  width: max-content;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.color-picker {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.color-option {
+  width: 40px;
+  height: 40px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 2px solid #000;
+}
