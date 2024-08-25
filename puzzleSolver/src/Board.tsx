@@ -17,26 +17,26 @@ const Board: React.FC = () => {
   };
 
   const isSafe = (board: string[][], row: number, col: number, color: string): boolean => {
-    // Aynı sütunda başka bir kraliçe var mı kontrol et
+    // Aynı sütunda başka bir kraliçe var mı
     for (let i = 0; i < 5; i++) {
-      if (i !== row && board[i][col] === 'Q') {
+      if (i != row && board[i][col] == 'Q') {
         console.log(`Hata: Satır ${row}, Sütun ${col} - Aynı sütunda başka bir kraliçe var.`);
         return false;
       }
     }
 
-    // Aynı satırda başka bir kraliçe var mı kontrol et
+    // Aynı satırda başka bir kraliçe var mı 
     for (let j = 0; j < 5; j++) {
-      if (j !== col && board[row][j] === 'Q') {
+      if (j !== col && board[row][j] == 'Q') {
         console.log(`Hata: Satır ${row}, Sütun ${col} - Aynı satırda başka bir kraliçe var.`);
         return false;
       }
     }
 
-    // Aynı renkte başka bir kraliçe var mı kontrol et
+    // Aynı renkte başka bir kraliçe var mı
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 5; j++) {
-        if (board[i][j] === 'Q' && board[i][j] === color) {
+        if (board[i][j] == 'Q' && board[i][j] == color) {
           console.log(`Hata: Satır ${row}, Sütun ${col} - Aynı renkte başka bir kraliçe var.`);
           return false;
         }
@@ -49,7 +49,7 @@ const Board: React.FC = () => {
     let r = row + dx;
     let c = col + dy;
     while (r >= 0 && r < 5 && c >= 0 && c < 5) {
-      if (board[r][c] === 'Q') {
+      if (board[r][c] =='Q') {
         console.log(`Hata: Satır ${row}, Sütun ${col} - Bir birim çaprazda bir kraliçe var.`);
         return false;
       }
@@ -77,7 +77,7 @@ const Board: React.FC = () => {
   };
 
   const placeQueens = (board: string[][], row: number, usedColors: Set<string>): boolean => {
-    if (row === 5) {
+    if (row == 5) {
       console.log("Çözüm bulundu:");
       console.table(board); 
       setSolutionFound(true);
@@ -86,7 +86,7 @@ const Board: React.FC = () => {
 
     for (let col = 0; col < 5; col++) {
       const color = board[row][col];
-      if (color !== '' && !usedColors.has(color)) {
+      if (color != '' && !usedColors.has(color)) {
         if (isSafe(board, row, col, color)) {
           board[row][col] = 'Q'; // Kraliçeyi yerleştir
           usedColors.add(color);
@@ -108,8 +108,8 @@ const Board: React.FC = () => {
   };
 
   const solvePuzzle = () => {
-    const newBoard = board.map(row => [...row]); // Tahtanın kopyasını oluştur
-    const usedColors = new Set<string>(); // Kullanılan renkler seti
+    const newBoard = board.map(row => [...row]); 
+    const usedColors = new Set<string>(); 
 
     if (placeQueens(newBoard, 0, usedColors)) {
       setBoard(newBoard); // Kraliçelerin yerleştiği tahtayı güncelle
